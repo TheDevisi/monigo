@@ -11,9 +11,10 @@ import (
 	// log "github.com/sirupsen/logrus"
 )
 
-func SendRamInfoStatus(b *bot.Bot) {
+// SendRamInfoStatus sends RAM info to the user
+func SendCpuInfoStatus(b *bot.Bot) {
 	ownerID := config.GetOwnerID()
-	b.RegisterHandler(bot.HandlerTypeMessageText, "💾 RAM", bot.MatchTypeExact, func(ctx context.Context, b *bot.Bot, update *models.Update) {
+	b.RegisterHandler(bot.HandlerTypeMessageText, "/cpu", bot.MatchTypeExact, func(ctx context.Context, b *bot.Bot, update *models.Update) {
 		// Checking if the user is the owner
 		if update.Message.Chat.ID != ownerID {
 			_, _ = b.SendMessage(ctx, &bot.SendMessageParams{
@@ -23,14 +24,13 @@ func SendRamInfoStatus(b *bot.Bot) {
 			return
 		}
 
-		// Collecting info about ram using utils/get_memory.go
-		memory := utils.GetMemory()
+		// Collecting info about CPU using utils/get_cpu.go
+		cpu := utils.GetCPU()
 
 		// Sending an answer to the user
 		_, _ = b.SendMessage(ctx, &bot.SendMessageParams{
 			ChatID: update.Message.Chat.ID,
-			Text:   memory,
+			Text:   cpu,
 		})
 	})
-
 }

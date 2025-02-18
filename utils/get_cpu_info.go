@@ -6,7 +6,11 @@ import (
 	"github.com/shirou/gopsutil/v4/cpu"
 )
 
-func Get_cpu_info() {
+func GetCPU() string {
 	cpu, err := cpu.Info()
-	fmt.Println(cpu, err)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return fmt.Sprintf("CPU: %v", cpu)
+
 }
