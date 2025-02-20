@@ -194,17 +194,10 @@ A: Pull the latest changes and rebuild:
 ```bash
 git pull origin main
 go build
-sudo systemctl restart monigo  # if running as service
+
 ```
 
 ### Troubleshooting
-
-**Q: The bot stopped responding, what should I do?**
-A: Try these steps:
-1. Check logs: `journalctl -u monigo -f`
-2. Restart the service: `sudo systemctl restart monigo`
-3. Verify your internet connection
-4. Ensure Telegram API is accessible
 
 **Q: Why are some metrics showing as "Error"?**
 A: This usually happens when:

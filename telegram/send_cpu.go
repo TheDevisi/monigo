@@ -26,6 +26,7 @@ func SendCpuInfoStatus(b *bot.Bot) {
 				ChatID: update.Message.Chat.ID,
 				Text:   "У тебя нет прав!",
 			})
+
 			if err != nil {
 				log.Error("Failed to send unauthorized message:", err)
 			}

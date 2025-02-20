@@ -12,7 +12,7 @@ import (
 func LoadEnv() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Ошибка загрузки .env файла")
+		log.Fatal("Error while loading .env file")
 	}
 }
 
@@ -20,7 +20,7 @@ func LoadEnv() {
 func GetToken() string {
 	token := os.Getenv("BOT_TOKEN")
 	if token == "" {
-		log.Fatal("BOT_TOKEN пустой или не найден в .env")
+		log.Fatal("BOT_TOKEN empty or not found in .env")
 	}
 	return token
 }
@@ -29,7 +29,7 @@ func GetToken() string {
 func GetOwnerID() int64 {
 	id := os.Getenv("OWNER_ID")
 	if id == "" {
-		log.Fatal("OWNER_ID не найден в .env")
+		log.Fatal("OWNER_ID is not found in .env")
 	}
 	return parseInt(id) // Convert into int64
 }
