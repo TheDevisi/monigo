@@ -8,11 +8,21 @@ import (
 )
 
 func GetMemory() string {
+	log.Debug("Retrieving memory statistics")
+
 	memory, err := mem.VirtualMemory()
 	if err != nil {
-		log.Info(err)
+		log.Error("Failed to get memory info: ", err)
+		return "Error fetching memory information"
 	}
-	fmt.Println(memory)
-	return fmt.Sprintf("All: %v MB, Avalible: %v MB, Using: %.2f%%",
+
+	log.WithFields(log.Fields{
+		"total":     memory.Total,
+		"available": memory.Available,
+		"used":      memory.Used,
+		"percent":   memory.UsedPercent,
+	}).Debug("Memory statistics retrieved")
+
+	return fmt.Sprintf("All: %v MB, Available: %v MB, Using: %.2f%%",
 		memory.Total/1024/1024, memory.Available/1024/1024, memory.UsedPercent)
 }

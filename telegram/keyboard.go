@@ -4,24 +4,6 @@ import (
 	"github.com/go-telegram/bot/models"
 )
 
-// CreateMainKeyboard creates the main reply keyboard
-func CreateMainKeyboard() *models.ReplyKeyboardMarkup {
-	return &models.ReplyKeyboardMarkup{
-		Keyboard: [][]models.KeyboardButton{
-			{
-				{Text: "/cpu"},
-				{Text: "/ram"},
-			},
-			{
-				{Text: "/disk"},
-				{Text: "/uptime"},
-			},
-		},
-		ResizeKeyboard:  true,
-		OneTimeKeyboard: false,
-	}
-}
-
 // Language selection keyboard
 func CreateLanguageKeyboard() *models.ReplyKeyboardMarkup {
 	return &models.ReplyKeyboardMarkup{
@@ -41,7 +23,7 @@ func CreateMainKeyboardRU() *models.ReplyKeyboardMarkup {
 	return &models.ReplyKeyboardMarkup{
 		Keyboard: [][]models.KeyboardButton{
 			{
-				{Text: "📊 Статистика"},
+				{Text: "📊 Статистика"}, // This will not be avalible in a few months
 			},
 			{
 				{Text: "💻 CPU"},
@@ -65,7 +47,7 @@ func CreateMainKeyboardEN() *models.ReplyKeyboardMarkup {
 	return &models.ReplyKeyboardMarkup{
 		Keyboard: [][]models.KeyboardButton{
 			{
-				{Text: "📊 Statistics"},
+				{Text: "📊 Statistics"}, // This will not be avalible in a few months
 			},
 			{
 				{Text: "💻 CPU"},
@@ -77,6 +59,22 @@ func CreateMainKeyboardEN() *models.ReplyKeyboardMarkup {
 			},
 			{
 				{Text: "🔄 Change language"},
+			},
+		},
+		ResizeKeyboard:  true,
+		OneTimeKeyboard: false,
+	}
+
+}
+
+func CreateStatKeyboard() *models.ReplyKeyboardMarkup {
+	return &models.ReplyKeyboardMarkup{
+		Keyboard: [][]models.KeyboardButton{
+			{
+				{Text: "123"},
+			},
+			{
+				{Text: "321"},
 			},
 		},
 		ResizeKeyboard:  true,

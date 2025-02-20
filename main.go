@@ -2,31 +2,56 @@ package main
 
 import (
 	"context"
-	"log"
 	"monigo/config"
 	"monigo/telegram"
 
 	"github.com/go-telegram/bot"
+	log "github.com/sirupsen/logrus"
 )
 
-func main() {
-	config.LoadEnv()
-	// Importing the token from .env (see config/config.go)
-	BOT_TOKEN := config.GetToken()
+func init() {
+	// Configure logrus
+	log.SetFormatter(&log.TextFormatter{
+		FullTimestamp: true,
+		DisableColors: false,
+	})
+}
 
-	b, err := bot.New(BOT_TOKEN) // Creating a new bot and catching an error (if it exists)
-	if err != nil {
-		log.Fatal(err)
+func main() {
+	// Set log level
+	log.SetLevel(log.InfoLevel)
+
+	log.Info("Starting Monigo bot...")
+
+	opts := []bot.Option{
+		bot.WithDefaultHandler(telegram.DefaultHandler),
 	}
 
+	config.LoadEnv()
+	log.Info("Environment variables loaded successfully")
+
+	// Importing the token from .env
+	BOT_TOKEN := config.GetToken()
+	log.Debug("Bot token retrieved")
+
+	b, err := bot.New(BOT_TOKEN, opts...)
+	if err != nil {
+		log.Fatal("Failed to create bot instance: ", err)
+	}
+	log.Info("Bot instance created successfully")
+
 	// Register command handlers
+	log.Info("Registering command handlers...")
 	telegram.Send_uptime(b)
 	telegram.SendRamInfoStatus(b)
 	telegram.SendDiskUsageInfoStatus(b)
 	telegram.SendCpuInfoStatus(b)
+	log.Info("Command handlers registered successfully")
 
 	// Register start command to show keyboard
 	telegram.Start(b)
-	// Starting the bot
+	log.Info("Start command handler registered")
+
+	log.Info("Bot is now running. Press Ctrl+C to exit")
 	b.Start(context.Background())
 }
