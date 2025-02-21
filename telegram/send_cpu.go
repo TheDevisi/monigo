@@ -24,13 +24,15 @@ func SendCpuInfoStatus(b *bot.Bot) {
 			log.Warn("Unauthorized CPU info request from user:", update.Message.From.Username)
 			_, err := b.SendMessage(ctx, &bot.SendMessageParams{
 				ChatID: update.Message.Chat.ID,
-				Text:   "У тебя нет прав!",
+				Text:   "🚫 You don't have permission! / У вас нет прав!",
 			})
+			log.Warn("Unauthorized CPU info request from user:", update.Message.From.Username)
 
 			if err != nil {
 				log.Error("Failed to send unauthorized message:", err)
 			}
 			return
+
 		}
 
 		// Collecting info about CPU

@@ -7,7 +7,7 @@ A powerful Telegram bot for monitoring your server's vital statistics in real-ti
 
 ## ✨ Features
 
-- 🌐 Bilingual support (English/Russian)
+- 🌐 Bilingual support in progress (English/Russian)
 - 💻 Real-time CPU monitoring
 - 💾 RAM usage tracking
 - 💿 Disk space analysis
@@ -112,9 +112,13 @@ GOOS=darwin GOARCH=amd64 go build -o monigo-mac
 ```
 monigo/
 ├── config/
-│   └── config.go         # Configuration management
+│   └── config.go  # Configuration management
+│       
+├── translations/
+│   ├── translations.go # Work still in progress.
+│
 ├── telegram/
-│   ├── keyboard_test.go  # Keyboard layouts
+│   ├── keyboard.go  # Keyboard layouts
 │   ├── send_cpu.go      # CPU monitoring
 │   ├── send_ram.go      # RAM monitoring
 │   ├── send_disk_usage.go # Disk monitoring
@@ -125,7 +129,7 @@ monigo/
 │   ├── get_cpu_info.go  # CPU utilities
 │   ├── get_memory.go    # Memory utilities
 │   └── uptime.go        # Uptime utilities
-└── main.go              # Entry point
+├── main.go              # Entry point
 ```
 
 ## 📝 TODO
@@ -166,7 +170,7 @@ A: Send a message to [@userinfobot](https://t.me/userinfobot) on Telegram. It wi
 A: You can:
 1. Use systemd (recommended for Linux):
 ```bash
-sudo systemctl start monigo
+sudo systemctl start monigo # if you set up it on your own
 ```
 2. Use screen or tmux:
 ```bash

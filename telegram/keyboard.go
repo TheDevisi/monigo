@@ -31,7 +31,7 @@ func CreateMainKeyboardRU() *models.ReplyKeyboardMarkup {
 			},
 			{
 				{Text: "💿 Диск"},
-				{Text: "⏱ Аптайм"},
+				{Text: "⏱️ Аптайм"},
 			},
 			{
 				{Text: "🔄 Сменить язык"},
@@ -55,7 +55,7 @@ func CreateMainKeyboardEN() *models.ReplyKeyboardMarkup {
 			},
 			{
 				{Text: "💿 Disk"},
-				{Text: "⏱ Uptime"},
+				{Text: "⏱️ Uptime"},
 			},
 			{
 				{Text: "🔄 Change language"},
