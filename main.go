@@ -18,6 +18,9 @@ func init() {
 }
 
 func main() {
+	// Load environment variables from .env
+	config.LoadEnv()
+
 	// Set log level
 	log.SetLevel(log.InfoLevel)
 
@@ -27,7 +30,6 @@ func main() {
 		bot.WithDefaultHandler(telegram.DefaultHandler),
 	}
 
-	config.LoadEnv()
 	log.Info("Environment variables loaded successfully")
 
 	// Importing the token from .env
@@ -46,6 +48,7 @@ func main() {
 	telegram.SendRamInfoStatus(b)
 	telegram.SendDiskUsageInfoStatus(b)
 	telegram.SendCpuInfoStatus(b)
+	telegram.SendMessageLogin(b)
 	log.Info("Command handlers registered successfully")
 
 	// Register start command to show keyboard

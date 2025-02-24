@@ -47,6 +47,8 @@ go mod download
 #### Development Build
 ```bash
 go build -v -o monigo
+# Make sure to copy .env file to the same directory as the binary
+cp .env ./monigo
 ./monigo
 ```
 
@@ -54,6 +56,8 @@ go build -v -o monigo
 ```bash
 # Optimized build with reduced binary size
 go build -v -ldflags="-s -w" -o monigo
+# Make sure to copy .env file to the same directory as the binary
+cp .env ./monigo
 ./monigo
 ```
 
@@ -134,7 +138,7 @@ monigo/
 
 ## 📝 TODO
 
-- [ ] SSH login monitoring
+- [x] SSH login monitoring
 - [ ] Additional system metrics
 - [ ] Custom alert thresholds
 - [ ] Make it more user-friendly

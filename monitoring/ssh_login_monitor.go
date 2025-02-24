@@ -2,43 +2,58 @@ package monitoring
 
 import (
 	"bufio"
-	"fmt"
 	"os"
 	"strings"
 
 	log "github.com/sirupsen/logrus"
 )
 
-func monitorSshLogins() {
-	/*
-		Basically we reading a log file, and storing it's original version.
-		When someone is trying to connect or already connect we send a message and updating this file.
-		In Ubuntu or Debian based distros everything is storing in /var/log/auth.log
-	*/
+var lastOffset int64 = 0
 
-	logPath := "/var/log/auth" // We're using this var because RedHat-based distros using another path
-	// But for now, only ubuntu support
-	authentificationLog, err := os.Open(logPath)
-
-	// The "coolest" go's error handling xD
+func MonitorSshLogins() bool {
+	logPath := "/var/log/auth.log"
+	file, err := os.Open(logPath)
 	if err != nil {
-		log.Error("cannot start ssh monitoring, error: ", err)
+		log.Errorf("cannot open ssh log file: %v", err)
+		return false
+	}
+	defer file.Close()
+
+	fileInfo, err := file.Stat()
+	if err != nil {
+		log.Errorf("cannot get file info: %v", err)
+		return false
 	}
 
-	// Create scanner
+	currentOffset := fileInfo.Size()
 
-	scanner := bufio.NewScanner(authentificationLog)
+	if lastOffset == 0 {
+		lastOffset = currentOffset
+		return false
+	}
 
-	for {
-		scanner.Scan()
-		line := scanner.Text()
-
-		if strings.Contains(line, "session oppened") || strings.Contains(line, "accepted publickey") {
-			fmt.Println("pizda!!!")
-			continue
-
+	if currentOffset > lastOffset {
+		_, err = file.Seek(lastOffset, 0)
+		if err != nil {
+			log.Errorf("cannot seek file: %v", err)
+			return false
 		}
 
+		reader := bufio.NewReader(file)
+		for {
+			line, err := reader.ReadString('\n')
+			if err != nil {
+				break
+			}
+			line = strings.TrimSpace(line)
+			lastOffset += int64(len(line)) + 1
+
+			if strings.Contains(line, "session opened") || strings.Contains(line, "Accepted publickey") {
+				log.Info("New login detected!")
+				return true
+			}
+		}
 	}
 
+	return false
 }
