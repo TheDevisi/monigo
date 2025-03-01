@@ -49,6 +49,7 @@ func main() {
 	telegram.SendDiskUsageInfoStatus(b)
 	telegram.SendCpuInfoStatus(b)
 	telegram.SendMessageLogin(b)
+	telegram.HighCPULoadMessage(b)
 	log.Info("Command handlers registered successfully")
 
 	// Register start command to show keyboard
