@@ -16,7 +16,7 @@ func MonitorCPU() bool {
 		return false
 	}
 
-	if len(percentage) > 0 && percentage[0] >= 1.0 {
+	if len(percentage) > 0 && percentage[0] >= 80.0 {
 		log.Warn("CPU usage is high: ", percentage[0], "%")
 		return true
 	}
